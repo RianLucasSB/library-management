@@ -1,7 +1,9 @@
 package com.rian.libraryproject.librarymanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 @Table(name = "tb_book")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Book {
 
     @Id
@@ -19,10 +22,17 @@ public class Book {
     private String title;
     private String publisher;
     private String image;
-    @ManyToMany(mappedBy = "writtedBooks")
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "tb_books_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
     private List<Author> authors = new ArrayList<>();
 
-    public void addAuthor(Author author){
+    public void registerAuthor(Author author) {
         authors.add(author);
     }
 }
