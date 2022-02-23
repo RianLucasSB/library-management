@@ -36,4 +36,10 @@ public class BookController {
         book.registerAuthor(author);
         return bookService.save(book);
     }
+
+    @PutMapping("/{bookId}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long bookId, @RequestBody Book book){
+        return new ResponseEntity<>(bookService.updateBook(bookId, book), HttpStatus.OK);
+    }
+
 }
